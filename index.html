@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lexia Powerup Learning</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
         * {
             margin: 0;
@@ -76,6 +78,25 @@
             top: 0;
             left: 0;
         }
+
+        .modal-content {
+            text-align: center;
+        }
+
+        .modal-body p {
+            margin-bottom: 20px;
+        }
+
+        .modal-footer {
+            text-align: center;
+        }
+
+        .copyright {
+            font-size: 12px;
+            text-align: center;
+            color: #777;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -88,10 +109,46 @@
         <iframe id="mainContent" src="WinAppRunner.htm" title="Main Content"></iframe>
     </div>
 
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Welcome to WebVM</h4>
+                </div>
+                <div class="modal-body">
+                    <p>This is a fork of a GitHub project from <a href="https://github.com/lrusso/WinAppRunner" target="_blank">https://github.com/lrusso/WinAppRunner</a>, where it has been modified to include pre-made applications. Please note that XPDevs does not own the main content of the HTML file (Main Content), only the popout and the included free pre-made apps.</p>
+                    <p>For more details, you can read the <a href="https://github.com/lrusso/WinAppRunner/blob/main/README.md" target="_blank">official documentation</a> or the <a href="https://github.com/XPDevs/WebVM/blob/main/README.md" target="_blank">XPDevs documentation</a>.</p>
+    <div class="copyright">
+        <p>&copy; 2025 XPDevs. All rights reserved.</p>
+    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="continueButton">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const toggleButton = document.getElementById('toggleButton');
             const popout = document.getElementById('popout');
+            const continueButton = document.getElementById('continueButton');
+            const myModal = $('#myModal');
+
+            // Show the modal when the page loads
+            myModal.modal('show');
+
+            continueButton.addEventListener('click', function() {
+                // Close the modal when the continue button is clicked
+                myModal.modal('hide');
+            });
 
             toggleButton.addEventListener('click', function() {
                 popout.classList.toggle('open');
