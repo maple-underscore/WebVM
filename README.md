@@ -1,79 +1,67 @@
-# EXE Launcher from Browser
+# EXE Launcher from Browser  
 
-This simple web-based tool allows users to run `.exe` files directly from the browser. The tool checks for the required environment and provides a user-friendly interface for selecting and launching executable files. It works specifically in Internet Explorer (IE) due to its reliance on ActiveX technology.
+This web-based tool allows users to run `.exe` files directly from their browser. The tool provides a user-friendly interface for selecting and launching executable files. It runs on a **virtual machine using a modified version of BoxedWine**, allowing it to work on any operating system with a modern web browser.  
 
-## Features
+## Features  
 
-- **Drag and Drop Support**: Users can drag and drop `.exe` or `.zip` files containing `.exe` files.
-- **File Selection**: Alternatively, users can select files using the file input button.
-- **Executable Launch**: Once an `.exe` file is selected, users can launch it with the click of a button (only supported in Internet Explorer).
-- **Zip File Handling**: If a `.zip` file containing an `.exe` is uploaded, the tool will extract and allow the `.exe` to be launched.
-- **Browser Check**: The page checks whether the user is using Internet Explorer. If not, a warning modal is displayed.
+- **Drag and Drop Support**: Users can drag and drop `.exe` or `.zip` files containing `.exe` files.  
+- **File Selection**: Alternatively, users can select files using the file input button.  
+- **Executable Launch**: Once an `.exe` file is selected, users can launch it with the click of a button.  
+- **Zip File Handling**: If a `.zip` file containing an `.exe` is uploaded, the tool will extract and allow the `.exe` to be launched.  
+- **Cross-Platform Support**: Runs on **any OS** that supports modern web browsers, as it utilizes a virtual machine based on BoxedWine.  
 
-## Requirements
+## Requirements  
 
-- **Browser**: This tool is designed to work with **Internet Explorer** due to the usage of ActiveX to execute `.exe` files.
-- **Operating System**: Should be used on a Windows machine that supports ActiveX controls.
+- **Browser**: Works on **any modern browser**, including Chrome, Firefox, Edge, and Safari.  
+- **Operating System**: Can be used on **any OS**, including Windows, Linux, macOS, and even mobile devices.  
 
-## How to Use
+## How to Use  
 
-1. **Open the HTML File**: Download the HTML file and open it in Internet Explorer.
-2. **Select or Drag and Drop Files**:
-    - Drag and drop an `.exe` file or a `.zip` file containing an `.exe` file into the designated drop area.
-    - Alternatively, click the "Browse" button to select the file manually.
-3. **Launch the Executable**:
-    - After selecting an `.exe` file, the "Launch Executable" button will appear.
-    - Click this button to execute the file.
+1. **Open the Web Page**: Visit the page where the tool is hosted.  
+2. **Select or Drag and Drop Files**:  
+    - Drag and drop an `.exe` file or a `.zip` file containing an `.exe` into the designated drop area.  
+    - Alternatively, click the "Browse" button to select a file manually.  
+3. **Launch the Executable**:  
+    - Once an `.exe` file is selected, the "Launch Executable" button will appear.  
+    - Click this button to execute the file within the virtual environment.  
 
-   > **Note**: The executable will only run if you're using Internet Explorer. Other browsers will display a modal message informing the user that the action cannot be performed.
+## How It Works  
 
-## How It Works
+- The tool uses **a modified version of BoxedWine**, a WebAssembly-based emulator, to run Windows executables in the browser.  
+- **File Processing**:  
+    - If a `.zip` file is uploaded, the contents are extracted, and the `.exe` file is identified and made available for launching.  
+    - If a `.exe` file is uploaded directly, it is loaded into the virtual machine for execution.  
+- The page contains modals for:  
+    - **Error Handling**: Displays errors if something goes wrong during file handling or execution.  
+    - **Success Notifications**: Notifies the user if the executable is launched successfully.  
 
-- The webpage uses **ActiveXObject** to execute the `.exe` file via the `WScript.Shell` API in Internet Explorer.
-- **File Processing**: 
-    - If the user uploads a `.zip` file, the contents are extracted and the `.exe` file is identified and made available for launching.
-    - If a `.exe` file is uploaded directly, it will be selected and made ready to launch.
+## Known Issues  
 
-- The page contains modals for:
-    - **Unsupported Browser**: If the browser is not Internet Explorer, it will show a modal prompting the user to continue anyway or close the page.
-    - **Error**: Displays errors if something goes wrong during file handling or execution.
-    - **Success**: Notifies the user if the executable is launched successfully.
+- **Performance Limitations**: Since the tool runs in a virtual machine within the browser, execution speeds may be slower than running `.exe` files natively.  
+- **Compatibility**: Not all Windows applications may function correctly due to limitations in BoxedWine.  
+- **File Size Limits**: Some browsers may impose restrictions on the size of files that can be processed.  
 
-## Known Issues
+## Troubleshooting  
 
-- **Internet Explorer Only**: This tool is limited to Internet Explorer due to the ActiveXObject usage. Modern browsers do not support this functionality.
-- **Security Warning**: Running executables from untrusted sources may pose a security risk. Ensure the files are from a trusted origin before execution.
+- **No Executable Selected**: Ensure you have selected a valid `.exe` or `.zip` file containing an `.exe`.  
+- **Failed to Launch Executable**: Some executables may require additional dependencies not included in the virtual machine.  
+- **Performance Issues**: Running larger programs may slow down execution due to WebAssembly limitations.  
 
-## Troubleshooting
+## Future Plans  
 
-- **No Executable Selected**: Ensure you have selected a valid `.exe` or `.zip` file containing an `.exe` file.
-- **Failed to Launch Executable**: Check that ActiveX is enabled in Internet Explorer.
-- **Unsupported Browser**: Use Internet Explorer to run this tool. Other browsers will not support the ActiveX functionality.
+Future updates aim to:  
+- **Improve performance** by optimizing the virtual machine.  
+- **Enhance compatibility** with more Windows applications.  
+- **Add support for persistent storage**, allowing applications to save and load files between sessions.  
 
-## Future Plans
+## Contributing  
 
-In the future, we aim to extend the compatibility of this tool to modern browsers like **Chrome** and **Firefox**. The plan involves finding alternatives to **ActiveXObject**, such as leveraging WebAssembly or native browser extensions, to allow execution of `.exe` files directly within these modern environments. This would make the tool more accessible and usable across a wider range of browsers.
+Feel free to fork this repository, improve it, and submit pull requests. Contributions to make it more robust or support additional use cases are welcome!  
 
-However, **Safari** will likely not support this functionality, as it does not provide support for ActiveX or any equivalent API for executing local executables. As a result, Safari users will not be able to launch `.exe` files via this tool.
+## License  
 
-## Contributing
+This project is open source and available under the MIT License. See the [LICENSE](LICENSE) file for more details.  
 
-Feel free to fork this repository, improve it, and submit pull requests. Any contributions to make it more robust or support more use cases are welcome!
+## About XPDevs  
 
-## License
-
-This project is open source and available under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
-## About XPDevs
-
-This tool was developed and is maintained by **XPDevs**. XPDevs is committed to building simple, accessible software solutions with a focus on empowering users to make the most out of their systems. -> PAINT.EXE.
-
-## Sample ZIP files
-
-* https://lrusso.github.io/WinAppRunner/demos/paint.zip
-
-* https://lrusso.github.io/WinAppRunner/demos/spider.zip
-
-## Based on the work of:
-
-https://github.com/danoon2/Boxedwine
+This tool was developed and is maintained by **XPDevs**. XPDevs is committed to building simple, accessible software solutions that empower users across all platforms.
