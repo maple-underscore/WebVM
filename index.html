@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Spinner</title>
+    <style>
+        /* Center the loader */
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            flex-direction: column;
+        }
+
+        .loader {
+            color: black;
+            font-size: 45px;
+            text-indent: -9999em;
+            overflow: hidden;
+            width: 1em;
+            height: 1em;
+            border-radius: 50%;
+            position: relative;
+            transform: translateZ(0);
+            animation: mltShdSpin 1.7s infinite ease, round 1.7s infinite ease;
+        }
+
+        @keyframes mltShdSpin {
+            0% {
+                box-shadow: 0 -0.83em 0 -0.4em,
+                0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em,
+                0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+            }
+            5%,
+            95% {
+                box-shadow: 0 -0.83em 0 -0.4em, 
+                0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 
+                0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+            }
+            10%,
+            59% {
+                box-shadow: 0 -0.83em 0 -0.4em, 
+                -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, 
+                -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+            }
+            20% {
+                box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em,
+                -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, 
+                -0.749em -0.34em 0 -0.477em;
+            }
+            38% {
+                box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em,
+                -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, 
+                -0.82em -0.09em 0 -0.477em;
+            }
+            100% {
+                box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 
+                0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+            }
+        }
+
+        @keyframes round {
+            0% { transform: rotate(0deg) }
+            100% { transform: rotate(360deg) }
+        }
+
+        .message {
+            font-size: 18px;
+            color: black;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .retry-btn {
+            display: none;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .retry-btn:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="loader" id="loader"></div>
+    <div class="message" id="message">Initializing...</div>
+    <button class="retry-btn" id="retryBtn" onclick="retry()">Retry</button>
+
+    <script>
+        // Function to simulate the loading and network decision
+        setTimeout(() => {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = 'Establishing connection...'; // Update message after 5 seconds
+
+            setTimeout(() => {
+                const randomDecision = Math.random() < 0.5; // 50/50 chance
+
+                if (randomDecision) {
+                    // Update message and redirect to the next HTML file after the delay
+                    messageDiv.textContent = 'Connection established. Redirecting...';
+                    setTimeout(() => {
+                        window.location.href = 'WinAppRunner.html'; // replace with your target HTML file
+                    }, 1500); // Redirect after 1.5 seconds to simulate loading
+                } else {
+                    // Simulate a 50/50 chance of a network error or server error
+                    const isServerError = Math.random() < 0.5;
+                    
+                    if (isServerError) {
+                        messageDiv.textContent = 'Error: Server Unavailable (500 Internal Server Error)';
+                    } else {
+                        messageDiv.textContent = 'Error: Network Protocol Timeout (SSL Handshake Failed)';
+                    }
+                    
+                    // Hide the spinner and show the retry button
+                    document.getElementById('loader').style.display = 'none'; // Hide the spinner
+                    document.getElementById('retryBtn').style.display = 'inline-block'; // Show retry button
+                }
+            }, 2000); // 2 seconds after the first message update
+
+        }, 5000); // 5 seconds delay before initiating the process
+
+        // Retry function to restart the process
+        function retry() {
+            document.getElementById('loader').style.display = 'inline-block'; // Show the spinner again
+            document.getElementById('retryBtn').style.display = 'none'; // Hide the retry button
+            document.getElementById('message').textContent = 'Initializing...'; // Reset message
+            // Restart the loading and decision process
+            setTimeout(() => {
+                document.getElementById('message').textContent = 'Establishing connection...'; // Update message
+                setTimeout(() => {
+                    const randomDecision = Math.random() < 0.5; // 50/50 chance
+
+                    if (randomDecision) {
+                        // Update message and redirect to the next HTML file after the delay
+                        document.getElementById('message').textContent = 'Connection established. Redirecting...';
+                        setTimeout(() => {
+                            window.location.href = 'nextpage.html'; // replace with your target HTML file
+                        }, 1500); // Redirect after 1.5 seconds
+                    } else {
+                        // Simulate a 50/50 chance of a network error or server error
+                        const isServerError = Math.random() < 0.5;
+                        
+                        if (isServerError) {
+                            document.getElementById('message').textContent = 'Error: Server Unavailable (500 Internal Server Error)';
+                        } else {
+                            document.getElementById('message').textContent = 'Error: Network Protocol Timeout (SSL Handshake Failed)';
+                        }
+                        
+                        document.getElementById('loader').style.display = 'none'; // Hide the spinner
+                        document.getElementById('retryBtn').style.display = 'inline-block'; // Show retry button
+                    }
+                }, 2000); // 2 seconds after the first message update
+            }, 5000); // Restart after 5 seconds
+        }
+    </script>
+
+</body>
+</html>
+
