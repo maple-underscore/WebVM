@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Notification Demo</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 2rem;
+  }
+  button {
+    font-size: 1.2rem;
+    padding: 0.5rem 1.2rem;
+    margin-right: 1rem;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<h1>Notification Demo</h1>
+
+<button id="enableBtn">Enable Notifications</button>
+<button id="notifyBtn">Show Notification</button>
+
+<script>
+  const enableBtn = document.getElementById('enableBtn');
+  const notifyBtn = document.getElementById('notifyBtn');
+
+  // Request permission to enable notifications
+  enableBtn.addEventListener('click', () => {
+    if (!('Notification' in window)) {
+      alert('This browser does not support notifications.');
+      return;
+    }
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') {
+        alert('Notifications enabled!');
+      } else {
+        alert('Notifications permission denied.');
+      }
+    });
+  });
+
+  // Show a notification if permission granted
+  notifyBtn.addEventListener('click', () => {
+    if (Notification.permission === 'granted') {
+      new Notification('Hello!', {
+        body: 'This is a test notification.',
+        icon: 'https://cdn-icons-png.flaticon.com/512/1827/1827504.png'
+      });
+    } else if (Notification.permission === 'denied') {
+      alert('You have denied notifications. Please enable them first.');
+    } else {
+      alert('Please enable notifications first.');
+    }
+  });
+</script>
+
+</body>
+</html>
