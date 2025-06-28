@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Notification Demo with Delay and Countdown</title>
+<title>Notification Demo with Delay, Countdown & Random Messages</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -29,12 +29,13 @@
     font-weight: bold;
     font-size: 1.2rem;
     color: #333;
+    margin-top: 1rem;
   }
 </style>
 </head>
 <body>
 
-<h1>Notification Demo with Delay and Countdown</h1>
+<h1>Notification Demo with Delay, Countdown & Random Messages</h1>
 
 <button id="enableBtn">Enable Notifications</button>
 
@@ -51,6 +52,108 @@
   const delayInput = document.getElementById('delayInput');
   const countdownDiv = document.getElementById('countdown');
   let countdownInterval;
+
+  // Array of 100+ random notification messages
+  const messages = [
+    "Time to take a break!",
+    "You’ve got mail.",
+    "Don’t forget to drink water.",
+    "Your meeting starts in 10 minutes.",
+    "New message from Alex.",
+    "Your download is complete.",
+    "Battery is running low.",
+    "It’s a great day to code!",
+    "You have a reminder set for tomorrow.",
+    "New friend request received.",
+    "Backup completed successfully.",
+    "Your favourite show is starting soon.",
+    "Don't forget your umbrella today.",
+    "New comment on your post.",
+    "You’ve reached your daily step goal.",
+    "Software update available.",
+    "Time to stretch your legs.",
+    "Your package has been shipped.",
+    "Weather alert: Heavy rain expected.",
+    "New event added to your calendar.",
+    "Meeting room booked.",
+    "Time to save your work.",
+    "You have 5 unread notifications.",
+    "New follower on your profile.",
+    "System scan finished.",
+    "Your subscription is about to expire.",
+    "Reminder: Dentist appointment tomorrow.",
+    "New email from HR.",
+    "You have pending tasks to complete.",
+    "Congratulations on your achievement!",
+    "New version of the app released.",
+    "Your session will expire soon.",
+    "Flash sale starts in 1 hour!",
+    "Don’t forget to submit your report.",
+    "Your order has been delivered.",
+    "Time to log your daily hours.",
+    "New message from your team.",
+    "Storage space running low.",
+    "Password will expire in 5 days.",
+    "Meeting rescheduled to 3 PM.",
+    "Happy birthday! 🎉",
+    "You have a new badge.",
+    "System reboot required.",
+    "Try the new features today.",
+    "Your profile was viewed 10 times today.",
+    "Don’t miss the webinar tomorrow.",
+    "You’ve been tagged in a photo.",
+    "Weekly report is ready.",
+    "New comment on your photo.",
+    "Your friend is online now.",
+    "Energy saver mode activated.",
+    "Reminder: Pay your bills.",
+    "Your download speed increased.",
+    "Congratulations on completing the course!",
+    "You received a gift.",
+    "New security alert.",
+    "Your meeting starts now.",
+    "Try our new app theme.",
+    "You have a voicemail message.",
+    "Your device needs an update.",
+    "New playlist added.",
+    "Weather update: Sunny tomorrow.",
+    "Don’t forget your keys.",
+    "Your appointment is confirmed.",
+    "New follower on social media.",
+    "Your file has been uploaded.",
+    "You have a calendar invitation.",
+    "Your password was changed successfully.",
+    "Reminder: Team lunch today.",
+    "New article published.",
+    "Your order is being processed.",
+    "You received a new review.",
+    "Low disk space warning.",
+    "Your flight is on time.",
+    "Don’t forget to check your tasks.",
+    "You have new messages.",
+    "Your subscription renewed successfully.",
+    "Time to update your profile.",
+    "Your video call is starting.",
+    "New comment in the forum.",
+    "You have a new connection request.",
+    "Meeting notes have been shared.",
+    "Your friend sent a sticker.",
+    "You earned reward points.",
+    "Your session has expired.",
+    "Your download has been paused.",
+    "Reminder: Project deadline tomorrow.",
+    "You have a new follower.",
+    "Device synced successfully.",
+    "Your settings were updated.",
+    "New course available.",
+    "Your account was accessed from a new device.",
+    "Try the new chat feature.",
+    "You have new friend suggestions.",
+    "Your payment was successful.",
+    "Check out today’s deals.",
+    "New message from customer support.",
+    "Your device is fully charged."
+  ];
 
   enableBtn.addEventListener('click', () => {
     if (!('Notification' in window)) {
@@ -82,10 +185,7 @@
 
     if (delaySeconds === 0) {
       countdownDiv.textContent = '';
-      new Notification('Hello!', {
-        body: `This notification appeared immediately.`,
-        icon: 'https://cdn-icons-png.flaticon.com/512/1827/1827504.png'
-      });
+      showRandomNotification();
       return;
     }
 
@@ -99,13 +199,20 @@
       } else {
         clearInterval(countdownInterval);
         countdownDiv.textContent = '';
-        new Notification('Hello!', {
-          body: `This notification appeared after ${delaySeconds} second${delaySeconds !== 1 ? 's' : ''}.`,
-          icon: 'https://cdn-icons-png.flaticon.com/512/1827/1827504.png'
-        });
+        showRandomNotification();
       }
     }, 1000);
   });
+
+  function showRandomNotification() {
+    const randomIndex = Math.floor(Math.random() * messages.length);
+    const randomMessage = messages[randomIndex];
+
+    new Notification('Notification', {
+      body: randomMessage,
+      icon: 'https://cdn-icons-png.flaticon.com/512/1827/1827504.png'
+    });
+  }
 </script>
 
 </body>
