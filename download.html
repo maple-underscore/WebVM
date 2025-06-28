@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Notification Demo</title>
+<title>Notification Demo with Delay</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -15,20 +15,33 @@
     margin-right: 1rem;
     cursor: pointer;
   }
+  label {
+    font-size: 1.1rem;
+    margin-right: 0.5rem;
+  }
+  input[type="number"] {
+    font-size: 1.1rem;
+    width: 80px;
+    padding: 0.3rem;
+  }
 </style>
 </head>
 <body>
 
-<h1>Notification Demo</h1>
+<h1>Notification Demo with Delay</h1>
 
 <button id="enableBtn">Enable Notifications</button>
+
+<label for="delayInput">Delay (seconds):</label>
+<input type="number" id="delayInput" min="0" value="0" />
+
 <button id="notifyBtn">Show Notification</button>
 
 <script>
   const enableBtn = document.getElementById('enableBtn');
   const notifyBtn = document.getElementById('notifyBtn');
+  const delayInput = document.getElementById('delayInput');
 
-  // Request permission to enable notifications
   enableBtn.addEventListener('click', () => {
     if (!('Notification' in window)) {
       alert('This browser does not support notifications.');
@@ -43,18 +56,24 @@
     });
   });
 
-  // Show a notification if permission granted
   notifyBtn.addEventListener('click', () => {
-    if (Notification.permission === 'granted') {
+    if (Notification.permission !== 'granted') {
+      alert('Please enable notifications first.');
+      return;
+    }
+
+    const delaySeconds = parseFloat(delayInput.value);
+    if (isNaN(delaySeconds) || delaySeconds < 0) {
+      alert('Please enter a valid non-negative number for delay.');
+      return;
+    }
+
+    setTimeout(() => {
       new Notification('Hello!', {
-        body: 'This is a test notification.',
+        body: `This notification appeared after ${delaySeconds} second(s).`,
         icon: 'https://cdn-icons-png.flaticon.com/512/1827/1827504.png'
       });
-    } else if (Notification.permission === 'denied') {
-      alert('You have denied notifications. Please enable them first.');
-    } else {
-      alert('Please enable notifications first.');
-    }
+    }, delaySeconds * 1000);
   });
 </script>
 
