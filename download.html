@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Notification Demo with Delay</title>
+<title>Notification Demo with Delay and Countdown</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -23,12 +23,18 @@
     font-size: 1.1rem;
     width: 80px;
     padding: 0.3rem;
+    margin-right: 1rem;
+  }
+  #countdown {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #333;
   }
 </style>
 </head>
 <body>
 
-<h1>Notification Demo with Delay</h1>
+<h1>Notification Demo with Delay and Countdown</h1>
 
 <button id="enableBtn">Enable Notifications</button>
 
@@ -37,10 +43,14 @@
 
 <button id="notifyBtn">Show Notification</button>
 
+<div id="countdown"></div>
+
 <script>
   const enableBtn = document.getElementById('enableBtn');
   const notifyBtn = document.getElementById('notifyBtn');
   const delayInput = document.getElementById('delayInput');
+  const countdownDiv = document.getElementById('countdown');
+  let countdownInterval;
 
   enableBtn.addEventListener('click', () => {
     if (!('Notification' in window)) {
@@ -68,12 +78,33 @@
       return;
     }
 
-    setTimeout(() => {
+    clearInterval(countdownInterval);
+
+    if (delaySeconds === 0) {
+      countdownDiv.textContent = '';
       new Notification('Hello!', {
-        body: `This notification appeared after ${delaySeconds} second(s).`,
+        body: `This notification appeared immediately.`,
         icon: 'https://cdn-icons-png.flaticon.com/512/1827/1827504.png'
       });
-    }, delaySeconds * 1000);
+      return;
+    }
+
+    let remaining = delaySeconds;
+    countdownDiv.textContent = `Notification in ${remaining} second${remaining !== 1 ? 's' : ''}...`;
+
+    countdownInterval = setInterval(() => {
+      remaining--;
+      if (remaining > 0) {
+        countdownDiv.textContent = `Notification in ${remaining} second${remaining !== 1 ? 's' : ''}...`;
+      } else {
+        clearInterval(countdownInterval);
+        countdownDiv.textContent = '';
+        new Notification('Hello!', {
+          body: `This notification appeared after ${delaySeconds} second${delaySeconds !== 1 ? 's' : ''}.`,
+          icon: 'https://cdn-icons-png.flaticon.com/512/1827/1827504.png'
+        });
+      }
+    }, 1000);
   });
 </script>
 
